@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rustup target list:*)",
+      "Bash(cargo build:*)",
+      "Bash(linera wallet show:*)",
+      "Bash(linera publish-and-create:*)",
+      "Bash(linera --with-wallet:*)",
+      "Bash(kill:*)",
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(linera --version:*)",
+      "Bash(npm run build:*)",
+      "Bash(claude doctor:*)"
+    ]
+  }
+}

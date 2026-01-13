@@ -1,0 +1,33 @@
+{
+  "name": "linera-game-platform",
+  "version": "1.0.0",
+  "description": "Decentralized Multi-Game Blockchain Platform - Chess, Poker, Blackjack",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview --host 0.0.0.0 --port 3000"
+  },
+  "dependencies": {
+    "@linera/client": "^0.15.8",
+    "chess.js": "^1.0.0-beta.8",
+    "ethers": "^6.9.0",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.0",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10"
+  }
+}
