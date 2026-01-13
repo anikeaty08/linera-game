@@ -23,10 +23,11 @@
 ## 🚀 Quick Start
 
 ## START BY DOCKER
+```
   docker compose build
 
   Docker compose up
-
+```
 ### Prerequisites
 ```bash
 # Install Linera CLI
