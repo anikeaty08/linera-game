@@ -10,10 +10,14 @@ RUN apt-get update && apt-get install -y \
     make \
     curl \
     git \
+    procps \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Linera services (matching project version)
-RUN cargo install --locked linera-service@0.15.8 linera-storage-service@0.15.8
+# Add WASM target for Linera contracts
+RUN rustup target add wasm32-unknown-unknown
+
+# Install Linera CLI and services (matching project version)
+RUN cargo install --locked linera-service@0.15.8 linera-storage-service@0.15.8 linera@0.15.8
 
 # Install Node.js via nvm
 RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.40.3/install.sh | bash \

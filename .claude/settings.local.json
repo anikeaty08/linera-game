@@ -11,7 +11,8 @@
       "Bash(curl:*)",
       "Bash(linera --version:*)",
       "Bash(npm run build:*)",
-      "Bash(claude doctor:*)"
+      "Bash(claude doctor:*)",
+      "Bash(git -C /home/aniket/linera-game log --oneline -10)"
     ]
   }
 }
