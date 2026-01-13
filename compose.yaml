@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5173:5173" # Frontend web app
+      - "8080:8080" # Linera faucet/service
+      - "9001:9001" # Linera shard proxy
+      - "13001:13001" # Linera shard
+    volumes:
+      - .:/build
+    environment:
+      - LINERA_FAUCET_URL=http://localhost:8080
+    stdin_open: true
+    tty: true
