@@ -22,6 +22,11 @@
 
 ## 🚀 Quick Start
 
+## START BY DOCKER
+  docker compose build
+
+  Docker compose up
+
 ### Prerequisites
 ```bash
 # Install Linera CLI
@@ -175,7 +180,7 @@ linera-game/
 ## 🧪 Testing
 
 ### GraphQL Playground
-Navigate to `http://localhost:8080` and test:
+Navigate to `http://localhost:8080/chains/{chain-id}/applications/{application_id}` and test:
 ```graphql
 query { totalUsers totalGamesPlayed }
 ```
