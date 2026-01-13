@@ -1,483 +1,238 @@
-# ChainGames - On-Chain Gaming Platform
+# 🎮 ChainGames
 
-A fully decentralized gaming platform built on **Linera blockchain** featuring Chess, Poker, and Blackjack. All game states, user profiles, and statistics are stored on-chain.
+[![Linera](https://img.shields.io/badge/Linera-v0.15.8-blue?style=for-the-badge&logo=blockchain&logoColor=white)](https://linera.io)
+[![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Rust](https://img.shields.io/badge/Rust-Latest-orange?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org)
+[![On-Chain](https://img.shields.io/badge/100%25-On--Chain-success?style=for-the-badge)](https://github.com)
 
-**Pure client-side React app** using `@linera/client` which handles gRPC connections to Conway testnet validators automatically. No backend servers needed!
-
-## Deployed Contract Info
-
-| Property | Value |
-|----------|-------|
-| **Chain ID** | `81cbeb0c7f867f5c00ba0893dd32423e1375ee7f1a713610f267d3754c44b9e9` |
-| **Application ID** | `07880cdecc939c81a4df950e4d688b837b423937938e70f1d055bd321526add7` |
-| **GraphQL Endpoint** | `http://localhost:8080/chains/{CHAIN_ID}/applications/{APP_ID}` |
+> **Fully decentralized gaming platform on Linera blockchain** featuring Chess ♟️, Poker 🃏, and Blackjack 🎰. Pure client-side with all game states, profiles, and leaderboards stored on-chain.
 
 ---
 
-## Quick Start
+## ✨ Features
 
-**Note:** This is a **pure client-side React app** using `@linera/client`. The library handles gRPC connections to Conway testnet validators automatically - just use the faucet URL and let the library handle the rest!
+- 🎯 **Pure Client-Side** - No backend servers, just React + `@linera/client`
+- ⛓️ **100% On-Chain** - All user data, game states, and stats live on blockchain
+- 🤖 **AI Opponents** - Play against Gemini-powered bots
+- 🏆 **Live Leaderboards** - Global rankings with ELO ratings
+- 👥 **Multiplayer Lobbies** - Create public/private game rooms
 
-### Option 1: Local Development (with local Linera service)
+---
 
-1. **Start the Linera Service** (for local GraphQL queries):
+## 🚀 Quick Start
 
+### Prerequisites
 ```bash
-# Make sure you have Linera CLI installed
+# Install Linera CLI
+curl https://linera.io/install.sh | bash
 linera --version
+```
 
-# Start the service on port 8080
+### Local Development
+
+```bash
+# 1. Start Linera service
 linera service --port 8080
-```
 
-2. **Start the Frontend**:
-
-```bash
+# 2. Run frontend
 cd frontend
 npm install
 npm run dev
 ```
 
-Frontend runs on `http://localhost:5173`
-
-3. **Access GraphQL Playground** (optional):
-
-Open `http://localhost:8080` in your browser to access the GraphQL IDE.
-
-### Option 2: Conway Testnet (Production)
-
-For production deployment, `@linera/client` automatically connects to Conway testnet validators via gRPC. No local service needed!
-
-1. **Set environment variables** (see `.env.example` in frontend directory)
-2. **Start the Frontend**:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The app will connect to Conway testnet validators automatically via gRPC.
+**Frontend:** `http://localhost:5173`  
+**GraphQL Playground:** `http://localhost:8080`
 
 ---
 
-## Testing Queries in GraphQL Playground
+## 📦 Contract Info
 
-When you open `http://localhost:8080`, you'll see the GraphQL IDE. Here's how to test:
-
-### Step 1: Navigate to the Application Endpoint
-
-Click on the application link or manually go to:
 ```
-http://localhost:8080/chains/81cbeb0c7f867f5c00ba0893dd32423e1375ee7f1a713610f267d3754c44b9e9/applications/52000db3cbc04e53f148ccff6670c98e3f09e952453aafc37cbe6a736bd73ad2
-```
-
-### Step 2: Run Test Queries
-
-Copy and paste these queries into the left panel and click the "Play" button:
-
-#### Check Platform Stats
-```graphql
-query {
-  totalUsers
-  totalGamesPlayed
-}
-```
-
-#### Get Leaderboard
-```graphql
-query {
-  leaderboard(limit: 10) {
-    rank
-    username
-    ethAddress
-    wins
-    losses
-    winRate
-    elo
-    totalGames
-  }
-}
-```
-
-#### Check Username Availability
-```graphql
-query {
-  isUsernameAvailable(username: "PlayerOne")
-}
-```
-
-#### Get User by ETH Address
-```graphql
-query {
-  userByEthAddress(ethAddress: "0x1234567890abcdef1234567890abcdef12345678") {
-    username
-    ethAddress
-    totalGames
-    chessWins
-    chessLosses
-    chessElo
-    pokerWins
-    pokerLosses
-    blackjackWins
-    blackjackLosses
-    currentStreak
-    bestStreak
-  }
-}
-```
-
-#### Get Open Lobbies
-```graphql
-query {
-  openLobbies {
-    lobbyId
-    creatorName
-    gameType
-    gameMode
-    timeControl
-    createdAt
-  }
-}
-```
-
-#### Get Game State
-```graphql
-query {
-  game(gameId: "YOUR_GAME_ID") {
-    gameId
-    gameType
-    gameMode
-    status
-    players
-    playerNames
-    winner
-    chessBoard {
-      activePlayer
-      isCheck
-      isCheckmate
-      moveHistory {
-        notation
-      }
-    }
-  }
-}
+Chain ID: 81cbeb0c7f867f5c00ba0893dd32423e1375ee7f1a713610f267d3754c44b9e9
+App ID:   55b7f913527c71c4b7f3887b9b19440aff59fdac9e78e4297217c376c4532b61
+Endpoint: http://localhost:8080/chains/{CHAIN_ID}/applications/{APP_ID}
 ```
 
 ---
 
-## Testing Mutations
+## 🎮 Games
 
-### Register a New User
-```graphql
-mutation {
-  registerUser(
-    username: "TestPlayer"
-    ethAddress: "0xabcdef1234567890abcdef1234567890abcdef12"
-    avatarUrl: ""
-  )
-}
-```
+<table>
+<tr>
+<td align="center" width="33%">
 
-### Record a Bot Game Result
-```graphql
-mutation {
-  recordBotGame(
-    gameType: CHESS
-    won: true
-    moves: 25
-  )
-}
-```
+### ♟️ Chess
+Full FIDE rules  
+Castling & en passant  
+Time controls  
+Move history
 
-### Create a Lobby
-```graphql
-mutation {
-  createLobby(
-    gameType: CHESS
-    gameMode: VS_FRIEND
-    isPublic: true
-    timeControl: 300
-  )
-}
-```
+</td>
+<td align="center" width="33%">
 
-### Make a Chess Move
-```graphql
-mutation {
-  chessMove(
-    gameId: "YOUR_GAME_ID"
-    fromSquare: 12
-    toSquare: 28
-  )
-}
-```
-*Note: Squares are numbered 0-63, where 0=a1, 7=h1, 56=a8, 63=h8*
+### 🃏 Poker
+Texas Hold'em  
+Betting rounds  
+Hand evaluation  
+Pot management
+
+</td>
+<td align="center" width="33%">
+
+### 🎰 Blackjack
+Hit/Stand/Double  
+Insurance bets  
+Dealer AI  
+Split hands
+
+</td>
+</tr>
+</table>
 
 ---
 
-## API Reference
+## 🔍 GraphQL Examples
 
 ### Queries
+```graphql
+# Platform stats
+{ totalUsers totalGamesPlayed }
 
-| Query | Description | Parameters |
-|-------|-------------|------------|
-| `totalUsers` | Get total registered users | - |
-| `totalGamesPlayed` | Get total games played | - |
-| `userProfile(owner)` | Get user by Linera address | `owner: String!` |
-| `userByEthAddress(ethAddress)` | Get user by ETH address | `ethAddress: String!` |
-| `userByUsername(username)` | Get user by username | `username: String!` |
-| `isUsernameAvailable(username)` | Check username availability | `username: String!` |
-| `playerStats(owner)` | Get player statistics | `owner: String!` |
-| `game(gameId)` | Get game state | `gameId: String!` |
-| `playerActiveGames(owner)` | Get active games | `owner: String!` |
-| `playerGameHistory(owner, limit)` | Get game history | `owner: String!`, `limit: Int!` |
-| `chessBoard(gameId)` | Get chess board state | `gameId: String!` |
-| `pokerGame(gameId)` | Get poker game state | `gameId: String!` |
-| `blackjackGame(gameId)` | Get blackjack state | `gameId: String!` |
-| `lobby(lobbyId)` | Get lobby info | `lobbyId: String!` |
-| `openLobbies(gameType)` | Get open lobbies | `gameType: GameType` (optional) |
-| `leaderboard(gameType, limit)` | Get leaderboard | `gameType: GameType`, `limit: Int!` |
-| `playerRank(owner, gameType)` | Get player rank | `owner: String!`, `gameType: GameType` |
+# Leaderboard
+{ leaderboard(limit: 10) { rank username wins losses elo } }
+
+# Game state
+{ game(gameId: "...") { status players winner } }
+```
 
 ### Mutations
-
-| Mutation | Description | Parameters |
-|----------|-------------|------------|
-| `registerUser` | Register new user | `username`, `ethAddress`, `avatarUrl` |
-| `updateProfile` | Update profile | `username`, `avatarUrl` |
-| `createLobby` | Create game lobby | `gameType`, `gameMode`, `isPublic`, `password`, `timeControl` |
-| `joinLobby` | Join a lobby | `lobbyId`, `password` |
-| `cancelLobby` | Cancel lobby | `lobbyId` |
-| `createGame` | Create direct game | `gameType`, `gameMode`, `opponent`, `timeSeconds` |
-| `chessMove` | Make chess move | `gameId`, `fromSquare`, `toSquare`, `promotion` |
-| `pokerAction` | Poker action | `gameId`, `action`, `betAmount` |
-| `blackjackAction` | Blackjack action | `gameId`, `action` |
-| `resignGame` | Resign from game | `gameId` |
-| `offerDraw` | Offer draw | `gameId` |
-| `acceptDraw` | Accept draw | `gameId` |
-| `claimTimeout` | Claim timeout win | `gameId` |
-| `recordBotGame` | Record bot game | `gameType`, `won`, `moves` |
-
-### Enums
-
 ```graphql
-enum GameType {
-  CHESS
-  POKER
-  BLACKJACK
-}
+# Register user
+mutation { registerUser(username: "Player1", ethAddress: "0x...", avatarUrl: "") }
 
-enum GameMode {
-  VS_BOT
-  VS_FRIEND
-  LOCAL
-}
+# Make chess move (squares: 0=a1, 63=h8)
+mutation { chessMove(gameId: "...", fromSquare: 12, toSquare: 28) }
 
-enum GameStatus {
-  WAITING_FOR_OPPONENT
-  IN_PROGRESS
-  COMPLETED
-  CANCELLED
-  TIMED_OUT
-}
+# Record bot game
+mutation { recordBotGame(gameType: CHESS, won: true, moves: 25) }
 ```
+
+<details>
+<summary>📖 <b>Full API Reference</b></summary>
+
+### Key Queries
+- `totalUsers` / `totalGamesPlayed` - Platform stats
+- `leaderboard(limit)` - Top players
+- `game(gameId)` - Game state
+- `openLobbies(gameType?)` - Available lobbies
+- `userByEthAddress(address)` - User profile
+
+### Key Mutations
+- `registerUser(username, ethAddress, avatarUrl)` - Create account
+- `createLobby(gameType, gameMode, isPublic, timeControl)` - New lobby
+- `joinLobby(lobbyId, password?)` - Join game
+- `chessMove(gameId, fromSquare, toSquare)` - Chess move
+- `pokerAction(gameId, action, betAmount?)` - Poker action
+- `blackjackAction(gameId, action)` - Blackjack action
+
+</details>
 
 ---
 
-## Project Structure
+## 🛠️ Tech Stack
+
+**Blockchain** • Linera v0.15.8 + async-graphql  
+**Contract** • Rust (WASM)  
+**Frontend** • React 18 + TypeScript + Vite  
+**Styling** • TailwindCSS  
+**State** • Zustand  
+**AI** • Gemini API  
+
+---
+
+## 📁 Project Structure
 
 ```
 linera-game/
 ├── src/
-│   ├── lib.rs          # ABI types, enums, game logic structs
-│   ├── state.rs        # Blockchain storage (MapView, RegisterView)
-│   ├── contract.rs     # Smart contract operations
-│   └── service.rs      # GraphQL queries and mutations
+│   ├── lib.rs          # Core types & game logic
+│   ├── state.rs        # Blockchain storage
+│   ├── contract.rs     # Smart contract
+│   └── service.rs      # GraphQL API
 ├── frontend/
 │   ├── src/
-│   │   ├── pages/      # React pages (Chess, Poker, Blackjack)
-│   │   ├── store/      # Zustand state management
-│   │   ├── services/   # API client (api.js)
-│   │   └── components/ # Reusable UI components
+│   │   ├── pages/      # Game UIs
+│   │   ├── store/      # Zustand store
+│   │   └── services/   # API client
 │   └── package.json
-├── tests/
-│   └── single_chain.rs # Integration tests
-├── Cargo.toml
-└── README.md
+└── tests/
+    └── single_chain.rs
 ```
 
 ---
 
-## Troubleshooting
+## 🧪 Testing
 
-### Frontend Not Updating
+### GraphQL Playground
+Navigate to `http://localhost:8080` and test:
+```graphql
+query { totalUsers totalGamesPlayed }
+```
 
-The frontend uses local game state (chess.js) for immediate feedback. To sync with blockchain:
+### cURL
+```bash
+curl -X POST "http://localhost:8080/chains/.../applications/..." \
+  -H "Content-Type: application/json" \
+  -d '{"query": "{ totalUsers }"}'
+```
 
-1. **For bot games**: Results are recorded via `recordBotGame` mutation after game ends
-2. **For multiplayer**: Poll the `game(gameId)` query every few seconds
-
-### Clear Cached State
-
-If you see old data, clear localStorage:
+### Clear Cache
 ```javascript
-// Run in browser console (F12)
+// Browser console (F12)
 localStorage.removeItem('chaingames-store')
 location.reload()
 ```
 
-### Service Not Running
+---
 
-```bash
-# Check if Linera service is running
-curl http://localhost:8080
+## 🐛 Troubleshooting
 
-# Restart the service
-linera service --port 8080
-```
-
-### Rebuild Contract
-
-```bash
-# Build for testing
-cargo build
-
-# Build for deployment (WASM)
-cargo build --release --target wasm32-unknown-unknown
-```
+| Issue | Solution |
+|-------|----------|
+| Frontend not updating | Clear localStorage or poll `game(gameId)` query |
+| Service not responding | Check `curl http://localhost:8080` |
+| Need to rebuild | `cargo build --release --target wasm32-unknown-unknown` |
 
 ---
 
-## Testing with cURL
+## 🌐 On-Chain Architecture
 
-### Test Connection
-```bash
-curl -X POST "http://localhost:8080/chains/81cbeb0c7f867f5c00ba0893dd32423e1375ee7f1a713610f267d3754c44b9e9/applications/52000db3cbc04e53f148ccff6670c98e3f09e952453aafc37cbe6a736bd73ad2" \
-  -H "Content-Type: application/json" \
-  -d '{"query": "{ totalUsers totalGamesPlayed }"}'
-```
+All game data lives on Linera blockchain:
 
-### Register User
-```bash
-curl -X POST "http://localhost:8080/chains/81cbeb0c7f867f5c00ba0893dd32423e1375ee7f1a713610f267d3754c44b9e9/applications/52000db3cbc04e53f148ccff6670c98e3f09e952453aafc37cbe6a736bd73ad2" \
-  -H "Content-Type: application/json" \
-  -d '{"query": "mutation { registerUser(username: \"Player1\", ethAddress: \"0x1234...\", avatarUrl: \"\") }"}'
-```
+✅ User profiles with ELO ratings  
+✅ Complete game states and move history  
+✅ Multiplayer lobbies and matchmaking  
+✅ Global leaderboards per game type  
 
-### Get Leaderboard
-```bash
-curl -X POST "http://localhost:8080/chains/81cbeb0c7f867f5c00ba0893dd32423e1375ee7f1a713610f267d3754c44b9e9/applications/52000db3cbc04e53f148ccff6670c98e3f09e952453aafc37cbe6a736bd73ad2" \
-  -H "Content-Type: application/json" \
-  -d '{"query": "{ leaderboard(limit: 10) { rank username wins losses winRate } }"}'
-```
+Every move is a GraphQL mutation executing on-chain. No centralized servers!
 
 ---
 
-## Game Features
-
-### Chess
-- Full piece movement validation
-- Castling (kingside & queenside)
-- En passant captures
-- Pawn promotion
-- Check/checkmate detection
-- Move history with algebraic notation
-- Time controls
-
-### Poker (Texas Hold'em)
-- Pre-flop, Flop, Turn, River stages
-- Fold, Check, Call, Raise, All-in actions
-- Pot management
-- Hand evaluation
-- Blind handling
-
-### Blackjack
-- Hit, Stand, Double Down, Split
-- Insurance betting
-- Dealer AI (hits to 17)
-- Multiple hands support
-- Natural blackjack detection
-
----
-
-## Tech Stack
-
-- **Blockchain**: Linera (v0.15.8)
-- **Smart Contract**: Rust + async-graphql
-- **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: TailwindCSS
-- **State**: Zustand
-- **Wallet**: MetaMask (for identity)
-- **AI**: Gemini API (for bot opponents)
-
----
-
-## Vercel Deployment
-
-Deploy the frontend as a static site on Vercel:
-
-### One-Click Deploy
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/linera-game&root-directory=frontend)
-
-### Manual Deployment
-
-1. **Install Vercel CLI**:
-```bash
-npm i -g vercel
-```
-
-2. **Navigate to frontend**:
-```bash
-cd frontend
-```
-
-3. **Deploy**:
-```bash
-vercel
-```
-
-### Environment Variables (Vercel Dashboard)
-
-Add these in Vercel Project Settings > Environment Variables:
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `VITE_CHAIN_ID` | Your Linera chain ID | Yes |
-| `VITE_APP_ID` | Your deployed app ID | Yes |
-| `VITE_GEMINI_API_KEY` | Gemini API key for AI bots | No |
-
-### WASM Headers
-
-The `vercel.json` is pre-configured with:
-- CORS headers for WASM support
-- `Cross-Origin-Embedder-Policy: require-corp`
-- `Cross-Origin-Opener-Policy: same-origin`
-- SPA routing fallback
-
-### Build Settings (Auto-detected)
-
-- **Build Command**: `npm run build`
-- **Output Directory**: `dist`
-- **Install Command**: `npm install`
-- **Framework**: Vite
-
----
-
-## On-Chain Data
-
-All game data is stored on the Linera blockchain:
-
-- **User Profiles**: Username, stats, ELO ratings
-- **Game States**: Board positions, move history
-- **Lobbies**: Multiplayer game coordination
-- **Leaderboards**: Rankings per game type
-
-Each move/action is recorded as a GraphQL mutation that executes on-chain.
-
----
-
-## License
+## 📄 License
 
 MIT License
+
+---
+
+<div align="center">
+
+**Built with ❤️ on Linera Blockchain**
+
+[Linera Docs](https://docs.linera.io) • [Report Bug](../../issues) • [Request Feature](../../issues)
+
+[![Made with Rust](https://img.shields.io/badge/Made%20with-Rust-orange?style=flat-square&logo=rust)](https://www.rust-lang.org)
+[![Powered by React](https://img.shields.io/badge/Powered%20by-React-61dafb?style=flat-square&logo=react)](https://react.dev)
+[![Blockchain](https://img.shields.io/badge/100%25-Decentralized-success?style=flat-square)](https://linera.io)
+
+</div>
